@@ -14,6 +14,9 @@ gem 'pg'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
 
+#performance monitoring
+gem 'newrelic_rpm'
+
 #blah blah blah content-length of response body
 gem 'thin'
 
@@ -69,9 +72,11 @@ gem 'cancan'
 # markdown
 gem 'redcarpet'
 
-# stuff for uploading images
+# stuff for handling images (probably won't be used, can't think of functionality)
 gem 'carrierwave'
 gem 'mini_magick', '~> 3.5.0'
+
+# Amazon Web Services helper gem
 gem 'fog'
 
 # pagination

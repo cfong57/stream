@@ -12,7 +12,14 @@ on YouTube embedded videos for now)
 
 ## Setup
 
-To get started, clone this repo and run the following from your terminal:
+To get started, clone this repo.
+
+Copy the "config/application.example.yml" file and remove "example". Your application.yml
+should contain your sensitive credentials. It should be included in .gitnore as well.
+
+/config/initializers/setup_mail.rb.tmp : Follow instructions contained therein.
+
+Now run the following from your terminal:
 
 ```
 $ bundle
