@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :name,
-  :provider, :uid
+  :provider, :uid, :make_public_on_delete
 
   has_many :songs, dependent: :destroy
   #users are prompted when deleting their account whether all uploads are deleted, or
