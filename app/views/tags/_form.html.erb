@@ -1,0 +1,36 @@
+<%= form_for tag, html: { class: 'form-horizontal'}, remote: true do |f| %>
+  <% if tag.errors.any? %>
+    <div class="alert alert-block">
+      <h4>There are <%= pluralize(tag.errors.count, "error") %>.</h4>
+      <ul>
+        <% tag.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= control_group_tag(tag.errors[:name]) do %>
+    <%= f.label :name, class: 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name %>
+    </div>
+  <% end %>
+  <%= control_group_tag(tag.errors[:value]) do %>
+    <%= f.label :value, class: 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :value, rows: 8 %>
+    </div>
+  <% end %>
+  <div class="control-group">
+    <div class="controls">
+      <%= f.label :public, class: 'checkbox' do %>
+      <%= f.check_box :public %> Public tag?
+    <% end %>
+    </div>
+  </div>
+  <div class="control-group">
+    <div class="controls">
+      <%= f.submit "Save", class: 'btn' %>
+    </div>
+  </div>
+<% end %>

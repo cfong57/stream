@@ -8,11 +8,12 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :name,
-  :provider, :uid, :make_public_on_delete
+  :provider, :uid, :public, :make_public_on_delete
 
+  has_many :tags, dependent: :destroy
   has_many :songs, dependent: :destroy
   #users are prompted when deleting their account whether all uploads are deleted, or
-  #re-uploaded to the public pool (where all uploads are anonymous)
+  #moved to the public pool (where all uploads are anonymous and untagged)
   #admins can choose whether to do that or not when deleting an account manually
 
   before_create :set_member
@@ -42,6 +43,26 @@ class User < ActiveRecord::Base
   def role?(base_role)
     role.nil? ? false : ROLES.index(base_role.to_s) <= ROLES.index(role)
   end  
+
+  def self.public_user
+    pub = User.where('name LIKE ?', "%_public-user_%").first
+    if(pub.nil?)
+      u = User.new(
+      name: "_public-user_",
+      email: "public@stream.it", 
+      password: "horsebatterystaple", 
+      password_confirmation: "horsebatterystaple")
+      u.skip_confirmation!
+      u.save
+      u.update_attribute(:role, 'admin')
+      pub = u
+    else
+      pub.update_attribute(:email, 'public@stream.it')
+      pub.update_attribute(:password, 'horsebatterystaple')
+      pub.update_attribute(:role, 'admin')
+    end
+    pub
+  end
 
   private
 

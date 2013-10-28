@@ -9,6 +9,7 @@ class Ability
     # Members can upload publicly or to their own pool, manage their own stuff freely
     # read: if public (same as guests) OR if my own 
     if user.role? :member
+      can :read, User, :user_id => user.id
       can :read, Song, :user_id => user.id
       can :update, Song, :user_id => user.id
       can :destroy, Song, :user_id => user.id
@@ -26,5 +27,6 @@ class Ability
     can :create, Song
     can :read, Song, public: true
     can :read, Tag, public: true
+    can :read, User, public: true
   end
 end

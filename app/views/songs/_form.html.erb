@@ -1,0 +1,42 @@
+<%= form_for song, html: { class: 'form-horizontal'}, remote: true do |f| %>
+  <% if song.errors.any? %>
+    <div class="alert alert-block">
+      <h4>There are <%= pluralize(song.errors.count, "error") %>.</h4>
+      <ul>
+        <% song.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= control_group_tag(song.errors[:name]) do %>
+    <%= f.label :name, class: 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name %>
+    </div>
+  <% end %>
+  <%= control_group_tag(song.errors[:audio]) do %>
+    <%= f.label :audio, class: 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :audio %>
+    </div>
+  <% end %>
+  <%= control_group_tag(song.errors[:info]) do %>
+    <%= f.label :info, class: 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :info, rows: 8 %>
+    </div>
+  <% end %>
+  <div class="control-group">
+    <div class="controls">
+      <%= f.label :public, class: 'checkbox' do %>
+      <%= f.check_box :public %> Public song?
+    <% end %>
+    </div>
+  </div>
+  <div class="control-group">
+    <div class="controls">
+      <%= f.submit "Save", class: 'btn' %>
+    </div>
+  </div>
+<% end %>

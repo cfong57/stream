@@ -14,6 +14,10 @@ gem 'pg'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
 
+#https://github.com/dejan/auto_html
+#allows simple embedding of youtube links and other html resources
+gem 'auto_html'
+
 #performance monitoring
 gem 'newrelic_rpm'
 

@@ -4,7 +4,8 @@
       <div class="media-body">
         <h2 class="media-heading"><%= @user.name %></h2>
         <small>
-          <%= pluralize(@user.songs.count, 'song') %>,
+          <%= pluralize(@user.posts.count, 'song') %>,
+          <%= pluralize(@user.comments.count, 'tag') %>
         </small>
       </div>
     </div>
@@ -17,10 +18,16 @@
   <div class="tabbable tabs-left">
     <ul class="nav nav-tabs">
       <li class="active"><a href="#songs" data-toggle="tab">Songs</a></li>
+      <li><a href="#tags" data-toggle="tab">Tags</a></li>
     </ul>
     <div class="tab-content">
       <div class="tab-pane active" id="songs">
-        <%= render @songs %>
+        <%= render @user.songs %>
+        <%= will_paginate @user.songs %>
+      </div>
+      <div class="tab-pane" id="tags">
+        <%= render @user.tags %>
+        <%= will_paginate @user.tags %>
       </div>
     </div>
   </div>

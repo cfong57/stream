@@ -1,0 +1,7 @@
+$('#tag-' +<%= @tag.id %>).hide();
+
+<% if @tag.destroyed? %>
+  $('#tag-' +<%= @tag.id %>).hide();
+<% else %>
+  $('#tag-' +<%= @tag.id %>).prepend("<div class='alert alert-error'><%= flash[:error] %></div>");
+<% end %>

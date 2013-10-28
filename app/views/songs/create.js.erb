@@ -1,0 +1,6 @@
+<% if @song.valid? %>
+  $(".js-songs").prepend("<%= escape_javascript(render(@song)) %>");
+  $(".new_song").replaceWith("<%= escape_javascript(render partial: 'form', locals: { song: @new_song }) %>");
+<% else %>
+  $(".new_song").replaceWith("<%= escape_javascript(render partial: 'form', locals: { song: @song }) %>");
+<% end %>
