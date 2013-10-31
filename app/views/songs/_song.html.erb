@@ -12,19 +12,5 @@
       <p><%= song.audio_html %></p>
       <p><%= markdown song.info %></p>
     </div>
-    <div class="span4">
-    <% if can? :create, Tag %>
-      <%= link_to "Add new tag", new_tag_path, class: 'btn btn-large btn-block' %>
-    <% end %>
-    <% if can? :edit, song %>
-      <%= link_to "Edit Song", edit_song_path, class: 'btn btn-large btn-block' %> 
-    <% end %>
-    <% if can? :destroy, song %>
-      <%= link_to "Delete Song", delete_song_path, class: 'btn btn-large btn-block btn-danger',
-      confirm: 'Are you sure you want to delete this song?' %> 
-    <% end %>
-    </div>
-    <%= render @tags %>
-    <%= will_paginate @tags %>
   </div>
 <% end %>

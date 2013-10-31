@@ -77,11 +77,11 @@ gem 'cancan'
 gem 'redcarpet'
 
 # stuff for handling images (probably won't be used, can't think of functionality)
-gem 'carrierwave'
-gem 'mini_magick', '~> 3.5.0'
+#gem 'carrierwave'
+#gem 'mini_magick', '~> 3.5.0'
 
 # Amazon Web Services helper gem
-gem 'fog'
+#gem 'fog'
 
 # pagination
 gem 'will_paginate', '~> 3.0'

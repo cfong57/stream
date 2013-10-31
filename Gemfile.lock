@@ -44,10 +44,6 @@ GEM
       sass (~> 3.2)
     builder (3.0.4)
     cancan (1.6.10)
-    carrierwave (0.9.0)
-      activemodel (>= 3.2.0)
-      activesupport (>= 3.2.0)
-      json (>= 1.7)
     celluloid (0.15.2)
       timers (~> 1.1.0)
     coderay (1.0.9)
@@ -68,7 +64,6 @@ GEM
     diff-lcs (1.2.4)
     erubis (2.7.0)
     eventmachine (1.0.3-x86-mingw32)
-    excon (0.27.6)
     execjs (2.0.2)
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
@@ -77,21 +72,10 @@ GEM
       railties (>= 3.0.0)
     faraday (0.8.8)
       multipart-post (~> 1.2.0)
-    ffi (1.9.1)
+    ffi (1.9.3)
     figaro (0.7.0)
       bundler (~> 1.0)
       rails (>= 3, < 5)
-    fog (1.16.0)
-      builder
-      excon (~> 0.27.0)
-      formatador (~> 0.2.0)
-      mime-types
-      multi_json (~> 1.0)
-      net-scp (~> 1.1)
-      net-ssh (>= 2.1.3)
-      nokogiri (~> 1.5)
-      ruby-hmac
-      unicode (~> 0.4.4)
     formatador (0.2.4)
     guard (2.2.2)
       formatador (>= 0.2.4)
@@ -116,7 +100,7 @@ GEM
     json (1.8.1)
     jwt (0.1.8)
       multi_json (>= 1.5)
-    listen (2.1.1)
+    listen (2.2.0)
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
@@ -126,17 +110,9 @@ GEM
       treetop (~> 1.4.8)
     method_source (0.8.2)
     mime-types (1.25)
-    mini_magick (3.5.0)
-      subexec (~> 0.2.1)
-    mini_portile (0.5.2)
     multi_json (1.8.2)
     multipart-post (1.2.0)
-    net-scp (1.1.2)
-      net-ssh (>= 2.6.5)
-    net-ssh (2.7.0)
     newrelic_rpm (3.6.8.168)
-    nokogiri (1.6.0-x86-mingw32)
-      mini_portile (~> 0.5.0)
     oauth2 (0.8.1)
       faraday (~> 0.8)
       httpauth (~> 0.1)
@@ -193,7 +169,7 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
-    rspec-core (2.14.6)
+    rspec-core (2.14.7)
     rspec-expectations (2.14.3)
       diff-lcs (>= 1.1.3, < 2.0)
     rspec-mocks (2.14.4)
@@ -204,7 +180,6 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
-    ruby-hmac (0.4.0)
     sass (3.2.12)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -219,7 +194,6 @@ GEM
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    subexec (0.2.3)
     thin (1.5.1)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
@@ -236,7 +210,6 @@ GEM
     uglifier (2.3.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
-    unicode (0.4.4)
     warden (1.2.3)
       rack (>= 1.0)
     wdm (0.1.0)
@@ -250,18 +223,15 @@ DEPENDENCIES
   auto_html
   bootstrap-sass (~> 2.3.1.0)
   cancan
-  carrierwave
   coffee-rails (~> 3.2.1)
   database_cleaner
   devise (~> 3.0.0)
   factory_girl_rails (~> 4.0)
   faker!
   figaro
-  fog
   guard-rspec (~> 2.5.1)
   jbuilder (~> 1.2)
   jquery-rails
-  mini_magick (~> 3.5.0)
   newrelic_rpm
   omniauth
   omniauth-facebook

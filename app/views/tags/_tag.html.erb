@@ -10,20 +10,7 @@
       <% end %>
     </small>  
       <p><%= markdown tag.value %></p>
+      <p><%= tag.songs.count %> songs</p>
     </div>
-    <div class="span4">
-    <% if can? :create, Tag %>
-      <%= link_to "Add new song", new_song_path, class: 'btn btn-large btn-block' %>
-    <% end %>
-    <% if can? :edit, tag %>
-      <%= link_to "Edit Tag", edit_song_path, class: 'btn btn-large btn-block' %> 
-    <% end %>
-    <% if can? :destroy, tag %>
-      <%= link_to "Delete Tag", delete_song_path, class: 'btn btn-large btn-block btn-danger',
-      confirm: 'Are you sure you want to delete this tag?' %> 
-    <% end %>
-    </div>
-    <%= render @songs %>
-    <%= will_paginate @songs %>
   </div>
 <% end %>
