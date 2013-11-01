@@ -7,10 +7,9 @@ seeds = {"slap chop" => "http://www.youtube.com/watch?v=JCZ13jm7wQI",
 "nanaya x ryougi" => "http://www.youtube.com/watch?v=vv6ArLTfVOM",
 "tsubame gaeshi" => "http://www.youtube.com/watch?v=CSsaROCeubs"}
 
-pub = User.public_user
-
+#nil user = public pool
 seeds.keys.size.times do |x|
-  pub.songs.create(name: seeds.keys[x], info: Faker::Song.paragraph, audio: seeds.values[x])
+  Song.create(name: seeds.keys.reverse[x], info: Faker::Song.paragraph, audio: seeds.values.reverse[x])
 end
 
 u = User.new(

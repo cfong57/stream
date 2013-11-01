@@ -7,11 +7,9 @@ class Song < ActiveRecord::Base
   #maybe later
 
   default_scope order('updated_at DESC')
-  scope :visible_to, lambda { |user| user ? scoped : joins(:song).where('song.public = true') }
+  scope :visible_to, lambda { |user| user == self.user ? scoped : joins(:song).where('song.public = true') }
 
-  #would rather users edit a current song than re-up and delete
-  #of course, if two different users try to upload something with the same name.......
-  validates :name, presence: true, uniqueness: true
+  validates :name, presence: true, uniqueness: {scope: :user_id}
   validates :audio, presence: true  
 
   auto_html_for :audio do

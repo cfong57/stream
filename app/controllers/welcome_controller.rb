@@ -6,7 +6,6 @@ class WelcomeController < ApplicationController
   end
 
   def public
-    @pub = User.public_user
-    @public_songs = @pub.songs.paginate(page: params[:page], per_page: 10)
+    @public_songs = Song.where(user_id: nil).paginate(page: params[:page], per_page: 10)
   end
 end

@@ -20,6 +20,7 @@ class Ability
     end  
 
     # Admins can do anything, including deleting others' stuff and viewing private things
+    # Because public pool songs have a nil user, only admins can edit/delete them
     if user.role? :admin
       can :manage, :all
     end

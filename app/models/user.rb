@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :name,
   :provider, :uid, :public, :make_public_on_delete
 
-  has_many :tags, dependent: :destroy
+  #has_many :tags, dependent: :destroy
   has_many :songs, dependent: :destroy
   #users are prompted when deleting their account whether all uploads are deleted, or
   #moved to the public pool (where all uploads are anonymous and untagged)
@@ -44,32 +44,13 @@ class User < ActiveRecord::Base
     role.nil? ? false : ROLES.index(base_role.to_s) <= ROLES.index(role)
   end  
 
-  def self.public_user
-    pub = User.where('name LIKE ?', "%_public-user_%").first
-    if(pub.nil?)
-      u = User.new(
-      name: "_public-user_",
-      email: "public@stream.it", 
-      password: "horsebatterystaple", 
-      password_confirmation: "horsebatterystaple")
-      u.skip_confirmation!
-      u.save
-      u.update_attribute(:role, 'admin')
-      pub = u
-    else
-      pub.update_attribute(:email, 'public@stream.it')
-      pub.update_attribute(:password, 'horsebatterystaple')
-      pub.update_attribute(:role, 'admin')
-    end
-    pub
-  end
-
   private
 
   def set_member
     self.role = 'member'
   end
 
+  #.public_user returns nil
   def transfer_songs
     if self.make_public_on_delete
       self.songs.each { |song| song.user = User.public_user }
