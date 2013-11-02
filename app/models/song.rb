@@ -6,8 +6,8 @@ class Song < ActiveRecord::Base
   #mount_uploader :audio, SongUploader
   #maybe later
 
-  default_scope order('updated_at DESC')
-  scope :visible_to, lambda { |user| user == self.user ? scoped : joins(:song).where('song.public = true') }
+  default_scope order('created_at DESC')
+  scope :visible_to, lambda { |user| Ability.new(user).can?(:read, self) ? scoped : joins(:song).where('song.public = true') }
 
   validates :name, presence: true, uniqueness: {scope: :user_id}
   validates :audio, presence: true  

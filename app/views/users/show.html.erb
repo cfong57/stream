@@ -1,29 +1,19 @@
-<div class="row">
-  <div class="span12">
-    <div class="media">
-      <div class="media-body">
-        <h2 class="media-heading"><%= @user.name %></h2>
-        <small>
-          <%= pluralize(@user.songs.count, 'song') %>,
-          <%= link_to "New Song", new_song_path %> ●
-        </small>
-      </div>
-    </div>
-  </div>
+<div class="row span12 media media-body">
+  <h2 class="media-heading"><%= @user.name %></h2>
+  <small>
+    <%= pluralize(@user.songs.count, 'song') %> ●
+    <%= link_to "New Song", new_song_path %> ●
+  </small>
 </div>
-
 <br/>
-
-<div class="row">
-  <div class="tabbable tabs-left">
-    <ul class="nav nav-tabs">
-      <li class="active"><a href="#songs" data-toggle="tab">Songs</a></li>
-    </ul>
-    <div class="tab-content">
-      <div class="tab-pane active" id="songs">
-        <%= render @songs %>
-        <%= will_paginate @songs %>
-      </div>
+<div class="row tabbable tabs-left">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#songs" data-toggle="tab">Songs</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="songs">
+      <%= render @songs %>
+      <%= will_paginate @songs %>
     </div>
   </div>
 </div>

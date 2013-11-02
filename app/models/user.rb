@@ -22,6 +22,9 @@ class User < ActiveRecord::Base
   #mount_uploader :song, SongUploader 
   #may experiment later with uploading audio directly
 
+  default_scope order('name ASC')
+  scope :visible_to, lambda { |user| Ability.new(user).can?(:read, self) ? scoped : joins(:user).where('user.public = true') }
+
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
     unless user

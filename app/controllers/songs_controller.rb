@@ -1,4 +1,8 @@
 class SongsController < ApplicationController
+  
+  def index
+    @songs = Song.visible_to(current_user).paginate(page: params[:page], per_page: 10)
+  end
 
   def new
     @song = Song.new
@@ -27,10 +31,13 @@ class SongsController < ApplicationController
   end
 
   def update
+    #keep track of where people were
+    session[:return_to] ||= request.referer
+
     @song = Song.find(params[:id])
     authorize! :update, @song, message: "Memebers can update their own songs only. Guests can't update."
     if @song.update_attributes(params[:song])
-      redirect_to @song, notice: "Song was updated."
+      redirect_to @song, notice: "\"#{@song.name}\" was updated successfully."
     else
       flash[:error] = "There was an error saving the song. Please try again."
       render :edit
@@ -38,12 +45,14 @@ class SongsController < ApplicationController
   end
 
   def destroy
+    #keep track of where people were
+    session[:return_to] ||= request.referer
+
     @song = Song.find(params[:id])
-    name = @song.name
     authorize! :destroy, @song, message: "Memebers can delete their own songs only. Guests can't delete."
     if @song.destroy
-      flash[:notice] = "\"#{name}\" was deleted successfully."
-      redirect_to root_url
+      flash[:notice] = "\"#{@song.name}\" was deleted successfully."
+      redirect_to session.delete(:return_to)
     else
       flash[:error] = "There was an error deleting the song."
       render :show

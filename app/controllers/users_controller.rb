@@ -6,5 +6,9 @@ class UsersController < ApplicationController
     @songs = @user.songs.visible_to(current_user).paginate(page: params[:page], per_page: 10)
     #@tags = @user.tags.visible_to(current_user).paginate(page: params[:page], per_page: 10)
   end
+  
+  def index
+    @users = User.visible_to(current_user).paginate(page: params[:page], per_page: 100)
+  end
 
 end

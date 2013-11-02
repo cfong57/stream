@@ -28,6 +28,16 @@
       <%= f.password_field :password_confirmation %>
     </div>
   </div>
+  <div class="control-group controls">
+    <%= f.label :public, class: 'checkbox' do %>
+      <%= f.check_box :public %> Public userpage viewable by everyone?
+    <% end %>
+  </div>
+  <div class="control-group controls">
+    <%= f.label :make_public_on_delete, class: 'checkbox' do %>
+      <%= f.check_box :make_public_on_delete %> Move songs to Anonymous Pool if this account is deleted?
+    <% end %>
+  </div>
   <div class="control-group">
     <div class="controls">
       <%= f.submit "Sign up", class: 'btn' %>

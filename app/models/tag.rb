@@ -4,7 +4,7 @@ class Tag < ActiveRecord::Base
   attr_accessible :name, :value, :public
 
   default_scope order('updated_at DESC')
-  scope :visible_to, lambda { |user| user == self.user ? scoped : joins(:tag).where('tag.public = true') }
+  scope :visible_to, lambda { |user| Ability.new(user).can?(:read, self) ? scoped : joins(:tag).where('tag.public = true') }
 
   validates :name, presence: true, uniqueness: {scope: :user_id}
 
