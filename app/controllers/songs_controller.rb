@@ -23,7 +23,7 @@ class SongsController < ApplicationController
   def create
     @song = current_user.songs.build(params[:song])
     if @song.save
-      redirect_to @song, notice: "Song was saved successfully."
+      redirect_to((session[:previous_url] || root_path), notice: "Song was saved successfully.")
     else
       flash[:error] = "There was an error saving the song. Please try again."
       render :new
@@ -31,13 +31,10 @@ class SongsController < ApplicationController
   end
 
   def update
-    #keep track of where people were
-    session[:return_to] ||= request.referer
-
     @song = Song.find(params[:id])
     authorize! :update, @song, message: "Memebers can update their own songs only. Guests can't update."
     if @song.update_attributes(params[:song])
-      redirect_to @song, notice: "\"#{@song.name}\" was updated successfully."
+      redirect_to((session[:previous_url] || root_path), notice: "\"#{@song.name}\" was updated successfully.")
     else
       flash[:error] = "There was an error saving the song. Please try again."
       render :edit
@@ -45,14 +42,10 @@ class SongsController < ApplicationController
   end
 
   def destroy
-    #keep track of where people were
-    session[:return_to] ||= request.referer
-
     @song = Song.find(params[:id])
     authorize! :destroy, @song, message: "Memebers can delete their own songs only. Guests can't delete."
     if @song.destroy
-      flash[:notice] = "\"#{@song.name}\" was deleted successfully."
-      redirect_to session.delete(:return_to)
+      redirect_to((session[:previous_url] || root_path), notice: "\"#{@song.name}\" was deleted successfully.")
     else
       flash[:error] = "There was an error deleting the song."
       render :show

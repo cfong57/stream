@@ -4,6 +4,8 @@
     <%= pluralize(@user.songs.count, 'song') %> ●
     <%= link_to "New Song", new_song_path %> ●
   </small>
+  <br/>
+  Move songs to Anonymous Pool if this account is deleted? <%= @user.make_public_on_delete ? "YES" : "NO" %>
 </div>
 <br/>
 <div class="row tabbable tabs-left">
