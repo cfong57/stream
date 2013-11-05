@@ -12,3 +12,10 @@
 .hide {
   display: none;
 }
+
+.song {
+ height:375px; 
+ white-space: nowrap;
+ overflow: hidden; 
+ text-overflow: ellipsis;
+}
