@@ -14,8 +14,6 @@
 }
 
 .song {
- height:375px; 
- white-space: nowrap;
- overflow: hidden; 
- text-overflow: ellipsis;
+ height:450px; 
+ overflow: auto;
 }
