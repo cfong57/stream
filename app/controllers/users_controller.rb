@@ -32,16 +32,17 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
+    # required for settings form to submit when password is left blank
     if params[:user][:password].blank?
-      params[:user].delete(:password)
-      params[:user].delete(:password_confirmation)
+      params[:user].delete("password")
+      params[:user].delete("password_confirmation")
     end
     if @user.update_attributes(params[:user])
-      flash[:notice] = "Successfully updated #{@user.name}."
+      flash[:notice] = "\"#{@user.name}\" was updated successfully."
       redirect_to @user
     else
       flash[:notice] = "There was a problem editing the user. Please try again."
-      render :action => 'edit'
+      render :edit
     end
   end
   

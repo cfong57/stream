@@ -14,3 +14,5 @@ class Tag < ActiveRecord::Base
   #it is of type text, to allow e.g. name = "background" value = "wall of text about african tribal drum songs"
 
 end
+
+# https://github.com/mbleigh/acts-as-taggable-on  ?

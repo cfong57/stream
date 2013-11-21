@@ -9,6 +9,11 @@ class Song < ActiveRecord::Base
   default_scope order('created_at DESC')
   scope :visible_to, lambda { |user| Ability.new(user).can?(:read, self) ? scoped : joins(:song).where('song.public = true') }
 
+  scope :alphabetical, ->{order('name DESC')}
+  #def alphabetical
+  #  @songs = Song.alphabetical
+  #  ...
+
   validates :name, presence: true, uniqueness: {scope: :user_id}
   validates :audio, presence: true  
 
