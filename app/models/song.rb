@@ -6,14 +6,18 @@ class Song < ActiveRecord::Base
   #mount_uploader :audio, SongUploader
   #maybe later
 
-  default_scope order('created_at DESC')
-  scope :visible_to, lambda { |user| Ability.new(user).can?(:read, self) ? scoped : joins(:song).where('song.public = true') }
+  scope :alphabetical, ->{order('name ASC')}
+  scope :recent, ->{order('created_at DESC')}
 
-  scope :alphabetical, ->{order('name DESC')}
-  #def alphabetical
-  #  @songs = Song.alphabetical
-  #  ...
+  def alphabetical
+    @songs = Song.alphabetical
+  end
 
+  def recent
+    @songs = Song.recent
+  end
+
+  #two different users might pick the exact same name for a song, if it's generic
   validates :name, presence: true, uniqueness: {scope: :user_id}
   validates :audio, presence: true  
 

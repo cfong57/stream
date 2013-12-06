@@ -2,20 +2,26 @@
   <h2 class="media-heading"><%= @user.name %></h2>
   <small>
     <%= pluralize(@user.songs.count, 'song') %> ●
-    <%= link_to "New Song", new_song_path %> ●
+    Member since <%= time_ago_in_words(@user.created_at) %>
   </small>
   <br/>
   Move songs to Anonymous Pool if this account is deleted? <%= @user.make_public_on_delete ? "YES" : "NO" %>
 </div>
 <br/>
-<div class="row tabbable tabs-left">
+
+<div class="tabbable tabs-left">
   <ul class="nav nav-tabs">
-    <li class="active"><a href="#songs" data-toggle="tab">Songs</a></li>
+    <li class="active"><a href="#recent" data-toggle="tab">Recently uploaded songs</a></li>
+    <li><a href="#alphabetical" data-toggle="tab">Songs A-Z</a></li>
   </ul>
   <div class="tab-content">
-    <div class="tab-pane active" id="songs">
-      <%= render @songs %>
-      <%= will_paginate @songs %>
+    <div class="tab-pane active" id="recent">
+      <%= render @songs_recent %>
+      <%= will_paginate @songs_recent %>
+    </div>
+    <div class="tab-pane" id="alphabetical">
+      <%= render @songs_alphabetical %>
+      <%= will_paginate @songs_alphabetical %>
     </div>
   </div>
 </div>

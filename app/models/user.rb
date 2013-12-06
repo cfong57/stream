@@ -12,18 +12,36 @@ class User < ActiveRecord::Base
 
   #has_many :tags, dependent: :destroy
   has_many :songs, dependent: :destroy
-  #users are prompted when deleting their account whether all uploads are deleted, or
-  #moved to the public pool (where all uploads are anonymous and untagged)
-  #admins can choose whether to do that or not when deleting an account manually
+  #songs are deleted when a user is deleted, unless they change make_public_on_delete to true
+  #in that case, the songs are moved to the anon pool (nil user_id)
+  #admins can change this option before deleting a user
 
   before_create :set_member
-  before_destroy :transfer_songs
+  before_destroy :transfer_songs, prepend: true
 
+  validates :name, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: true
+
+  #people who log in via facebook etc won't have a password in our database
+  unless(:provider)
+    validates :password, presence: true
+  end
+  
   #mount_uploader :song, SongUploader 
   #may experiment later with uploading audio directly
 
-  default_scope order('name ASC')
-  scope :visible_to, lambda { |user| Ability.new(user).can?(:read, self) ? scoped : joins(:user).where('user.public = true') }
+  scope :alphabetical, ->{order('name ASC')}
+  scope :recent, ->{order('created_at DESC')}
+
+  def self.uploads
+    self.select('users.*'). # Select all attributes of the user
+        select('COUNT(DISTINCT songs.id) AS songs_count'). # Count the uploads made by the user
+        select('COUNT(DISTINCT songs.id) AS rank'). # Label the uploads count as "rank"
+        joins(:songs). # Ties the songs table to the users table, via the user_id
+        group('users.id'). # Instructs the database to group the results so that each user will be returned in a distinct row
+        order('rank DESC') # Instructs the database to order the results in descending order, by the rank that we created in this query.
+        #Users with 0 songs will not show up
+  end
 
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
@@ -42,7 +60,7 @@ class User < ActiveRecord::Base
     user
   end
 
-  ROLES = %w[member admin]
+  ROLES = %w[member moderator admin]
   def role?(base_role)
     role.nil? ? false : ROLES.index(base_role.to_s) <= ROLES.index(role)
   end  
@@ -53,10 +71,13 @@ class User < ActiveRecord::Base
     self.role = 'member'
   end
 
-  #.public_user returns nil
   def transfer_songs
     if self.make_public_on_delete
-      self.songs.each { |song| song.user = User.public_user }
+      spoink = self.id
+      songs = Song.where("user_id = ?", spoink)
+      songs.each do |song|
+        song.update_attribute(:user_id, nil)
+      end
     end
   end
 

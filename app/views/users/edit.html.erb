@@ -1,37 +1,52 @@
 <h2>Edit User</h2>
 
 <%= form_for(@user, :as => "user", :url => user_path, :html => { :method => :put, :class => 'form-horizontal' }) do |f| %>
-  <%= devise_error_messages! %>
+  
+  <% if @user.errors.any? %>
+  <% #replaces devise_error_messages!  ; not the prettiest solution, but functional %>
+    <div class="alert alert-block">
+      <h4>There are <%= pluralize(@user.errors.count, "error") %>.</h4>
+      <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-  <div class="control-group">
+
+
+  <%= control_group_tag(@user.errors[:name]) do %>
     <%= f.label :name, class: 'control-label'  %>
     <div class="controls">
       <%= f.text_field :name, :autofocus => true %>
     </div>
-  </div>
-  <div class="control-group">
+  <% end %>
+  <%= control_group_tag(@user.errors[:email]) do %>
     <%= f.label :email, class: 'control-label'  %>
     <div class="controls">
-      <%= f.email_field :email %>
-    </div>
-  </div>
-
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div class="control-group">
-      <p>Waiting confirmation for:</p>
-      <div class="controls">
-        <%= resource.unconfirmed_email %>
-      </div>
+      <%= f.text_field :email %>
     </div>
   <% end %>
-  <% unless current_user.provider? %>
-    <div class="control-group">
+  
+
+  <% #if devise_mapping.confirmable? && @user.pending_reconfirmation?    devise part, not sure what it does %>
+
+  <% if !(@user.provider?) %>
+    <%= control_group_tag(@user.errors[:email]) do %>
       <%= f.label :password, class: 'control-label' %>
       <div class="controls">
         <%= f.password_field :password %>
       </div>
+    <% end %>
+  <% else %>
+    <div class="control-group">
+      <div class="controls">
+        <p>User logged in via <%= @user.provider.capitalize %>.</p>
+      </div>
     </div>
   <% end %>
+
   <div class="control-group controls">
     <%= f.label :public, class: 'checkbox' do %>
       <%= f.check_box :public %> Public userpage viewable by everyone?

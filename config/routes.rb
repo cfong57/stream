@@ -4,8 +4,7 @@ Stream::Application.routes.draw do
   root :to => 'welcome#index'
 
   match "about" => 'welcome#about', via: :get
-  match "anonymous" => 'welcome#anonymous', via: :get
-  match "business" => 'welcome#business', via: :get
+  match "anonymous" => 'songs#anonymous', via: :get
 
   resources :songs
   resources :tags

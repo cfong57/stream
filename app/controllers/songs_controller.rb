@@ -1,7 +1,8 @@
 class SongsController < ApplicationController
   
   def index
-    @songs = Song.visible_to(current_user).paginate(page: params[:page], per_page: 10)
+    @songs_alphabetical = Song.alphabetical.paginate(page: params[:page], per_page: 10)
+    @songs_recent = Song.recent.paginate(page: params[:page], per_page: 10)
   end
 
   def new
@@ -21,9 +22,13 @@ class SongsController < ApplicationController
   end
 
   def create
-    @song = current_user.songs.build(params[:song])
+    @song = Song.new(params[:song])
+    #allows guests to upload, since can't .songs.build off a non-user
+    if(current_user)
+      @song.update_attribute(:user, current_user)
+    end
     if @song.save
-      redirect_to((session[:previous_url] || root_path), notice: "Song was saved successfully.")
+      redirect_to(@song, notice: "Song was saved successfully.")
     else
       flash[:error] = "There was an error saving the song. Please try again."
       render :new
@@ -32,9 +37,9 @@ class SongsController < ApplicationController
 
   def update
     @song = Song.find(params[:id])
-    authorize! :update, @song, message: "Memebers can update their own songs only. Guests can't update."
+    authorize! :update, @song, message: "You can't edit a song that doesn't belong to you. Guests can't edit."
     if @song.update_attributes(params[:song])
-      redirect_to((session[:previous_url] || root_path), notice: "\"#{@song.name}\" was updated successfully.")
+      redirect_to(proper_redirect_path_for(@song), notice: "\"#{@song.name}\" was updated successfully.")
     else
       flash[:error] = "There was an error saving the song. Please try again."
       render :edit
@@ -45,7 +50,14 @@ class SongsController < ApplicationController
     @song = Song.find(params[:id])
     authorize! :destroy, @song, message: "Memebers can delete their own songs only. Guests can't delete."
     if @song.destroy
-      redirect_to((session[:previous_url] || root_path), notice: "\"#{@song.name}\" was deleted successfully.")
+      if(proper_redirect_path_for(@song).match("\/songs\/[0-9]+"))
+        #ugly hack to redirect to userpage if song was deleted from its show view
+        #kind of arbitrary choice, would be "best" to send to "wherever they were before viewing song"
+        redirect_to(current_user, notice: "\"#{@song.name}\" was deleted successfully.")
+      else
+        #otherwise, send to wherever user was last at
+        redirect_to(proper_redirect_path_for(@song), notice: "\"#{@song.name}\" was deleted successfully.")
+      end
     else
       flash[:error] = "There was an error deleting the song."
       render :show
@@ -56,6 +68,10 @@ class SongsController < ApplicationController
   def preview
     song = Song.new(params[:song])
     render :text => song.audio_html
+  end
+
+  def anonymous
+    @anonymous_songs = Song.where(user_id: nil).paginate(page: params[:page], per_page: 10)
   end
 
 end

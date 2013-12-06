@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     if @user.save
-      redirect_to root_path, notice: "Successfully created #{@user.name}." 
+      redirect_to @user, notice: "Successfully created #{@user.name}." 
     else
       flash[:error] = "There was an error saving the user. Please try again."
       render :new
@@ -18,12 +18,15 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     authorize! :read, @user, message: "This user is private."
-    @songs = @user.songs.visible_to(current_user).paginate(page: params[:page], per_page: 10)
+    @songs_alphabetical = @user.songs.alphabetical.paginate(page: params[:page], per_page: 10)
+    @songs_recent = @user.songs.recent.paginate(page: params[:page], per_page: 10)
     #@tags = @user.tags.visible_to(current_user).paginate(page: params[:page], per_page: 10)
   end
   
   def index
-    @users = User.visible_to(current_user).paginate(page: params[:page], per_page: 100)
+    @users_alphabetical = User.alphabetical.paginate(page: params[:page], per_page: 10)
+    @users_uploads = User.uploads.paginate(page: params[:page], per_page: 10)
+    @users_recent = User.recent.paginate(page: params[:page], per_page: 10)
   end
 
   def edit
@@ -51,7 +54,7 @@ class UsersController < ApplicationController
     name = @user.name
     if @user.destroy
       flash[:notice] = "\"#{name}\" was deleted successfully."
-      redirect_to root_path
+      redirect_to users_path
     else
       flash[:error] = "There was an error deleting the user."
       render :show

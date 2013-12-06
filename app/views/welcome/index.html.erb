@@ -7,14 +7,8 @@
   </p>
 </div>
 
-<p>Hi, it's Vince with S-s-s-s-st-st-st-stream-it-it-it-it-it-it (watch this)</p>
-<p>Hi, it's Vince with stream.it</p>
-<p>You're gonna be in a great mood all day</p>
-<p>Cause you're gonna be streaming your troubles away with the stream app</p>
-<p>Stream-streaming your troubles away with the stream app, now</p>
-<p>Hi, it's Vince with stream.it</p>
-<p>You're gonna be in a great mood all day</p>
-<p>Cause you're gonna be streaming your troubles away with the stream app</p>
-<p>Stream-streaming your troubles away with the stream app, now</p>
-<p>Now look, here's a first song</p>
-<p>One stream, you got sountrack for ad, two streams, playlist</p>
+<li>Jump right in by <%= link_to "uploading a new song", new_song_path %>. It will show up in the 
+<%= link_to "Anonymous Pool", anonymous_path %>, unless you <%= link_to "sign up", new_user_registration_path %> 
+first. Then it will be on <%= link_to "your userpage", current_user %>.</li>
+<li>You can browse <%= link_to "all songs", songs_path %> and <%= link_to "all users", users_path %> to
+see what others have done.</li>

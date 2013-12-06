@@ -3,6 +3,7 @@
     <%= link_to user.name, user %>
   </h4>
   <small>
-    <%= pluralize(user.songs.count, 'song') %>
+    <%= pluralize(user.songs.count, 'song') %> ●
+    Member since <%= time_ago_in_words(user.created_at) %>
   </small>
 </div>
