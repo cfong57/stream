@@ -27,8 +27,13 @@ class UsersController < ApplicationController
   
   def index
     #current_ability defaults to read
-    @users = User.accessible_by(current_ability).order(sort_column + ' ' + sort_direction).
-    paginate(page: params[:page], per_page: 10)
+    if(params[:sort] == "songs_count")
+      @users = User.accessible_by(current_ability).uploads(sort_direction).
+      paginate(page: params[:page], per_page: 10)
+    else
+      @users = User.accessible_by(current_ability).order(sort_column + ' ' + sort_direction).
+      paginate(page: params[:page], per_page: 10)
+    end
   end
 
   def edit
@@ -69,11 +74,17 @@ class UsersController < ApplicationController
   #but the only important things to sort on are attributes with identical names in Song, so...
   #SQL injection type tampering could create broken queries but it shouldn't do anything
   def sort_column
-    Song.column_names.include?(params[:sort]) ? params[:sort] : "name"
+    #songs_count is a specific query, so it's not in the Song table
+    default = (params[:sort] == "songs_count") ? "songs_count" : "name"
+    Song.column_names.include?(params[:sort]) ? params[:sort] : default
   end
 
   def sort_direction
-    ["asc", "desc"].include?(params[:direction]) ? params[:direction] : "asc"
+    if(["asc", "desc"].include?(params[:direction]))
+      params[:direction] == "asc" ? "desc" : "asc"
+    else
+      "asc"
+    end
   end
 
 end

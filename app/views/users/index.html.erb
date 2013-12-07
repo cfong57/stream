@@ -3,8 +3,9 @@
   <p>
     Index of all users visible to you.</br>
     <%= sortable "name", "Sort A-Z" %> ● 
-    <%= sortable "created_at", "Sort by join date" %>
-    <% #=sortable "uploads", "Sort by number of uploads"    need some clever hack for this one %> 
+    <%= sortable "created_at", "Sort by join date" %> ●
+    <%= link_to "Sort by number of uploads", users_path({:sort => "songs_count", :direction => sort_direction}),
+    {:class => toggle_arrow("songs_count")} %> 
   </p>
   <%= render @users %>
   <%= will_paginate @users %>

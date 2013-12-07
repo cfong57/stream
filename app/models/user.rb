@@ -36,12 +36,12 @@ class User < ActiveRecord::Base
   # Ties the songs table to the users table, via the user_id
   # Instructs the database to group the results so that each user will be returned in a distinct row
   # Instructs the database to order the results in descending order
-  def self.uploads
+  def self.uploads(direction = "desc")
     self.select('users.*'). 
     select('COUNT(DISTINCT songs.id) AS songs_count'). 
     joins(:songs). 
     group('users.id'). 
-    order('songs_count DESC') 
+    order('songs_count ' + direction) 
   end
 
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
