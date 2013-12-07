@@ -17,3 +17,17 @@
  height:450px; 
  overflow: auto;
 }
+
+.sort-column {
+  padding-right: 12px;
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+
+.asc { 
+  background-image: url(http://upload.wikimedia.org/wikipedia/commons/d/d5/Up-arrow-14.png); 
+}
+
+.desc { 
+  background-image: url(http://upload.wikimedia.org/wikipedia/commons/7/7d/Down-arrow-14.png); 
+}

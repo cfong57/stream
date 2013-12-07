@@ -1,24 +1,10 @@
-<% #might want to try and get this to be on a grid eventually %>
-
 <div class="row">
   <h1>All Songs</h1>
-  <p>Index of all songs. Use the tabs to switch between sorting.</p>
-
-  <div class="tabbable tabs-left">
-    <ul class="nav nav-tabs">
-      <li class="active"><a href="#recent" data-toggle="tab">Recently uploaded</a></li>
-      <li><a href="#alphabetical" data-toggle="tab">Alphabetical</a></li>
-    </ul>
-    <div class="tab-content">
-      <div class="tab-pane active" id="recent">
-        <%= render @songs_recent %>
-        <%= will_paginate @songs_recent %>
-      </div>
-      <div class="tab-pane" id="alphabetical">
-        <%= render @songs_alphabetical %>
-        <%= will_paginate @songs_alphabetical %>
-      </div>
-    </div>
-  </div>
-
+  <p>
+    Index of all songs visible to you. </br>
+    <%= sortable "name", "Sort A-Z" %> ●
+    <%= sortable "created_at", "Sort by upload date" %>
+  </p>
+  <%= render @songs %>
+  <%= will_paginate @songs %>
 </div>

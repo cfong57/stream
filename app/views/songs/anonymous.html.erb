@@ -1,6 +1,10 @@
 <div class="row">
   <h1>The Anonymous Pool</h1>
-  <p>Songs here are uploaded by guests and non-logged in users.</p>
+  <p>
+    Songs here are uploaded by guests and non-logged in users.</br>
+    <%= sortable "name", "Sort A-Z" %> ●
+    <%= sortable "created_at", "Sort by upload date" %>
+  </p>
   <%= render @anonymous_songs %>
   <%= will_paginate @anonymous_songs %>
 </div>

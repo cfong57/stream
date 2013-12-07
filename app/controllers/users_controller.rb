@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   #load_and_authorize_resource
+  helper_method :sort_column, :sort_direction
 
   def new
     @user = User.new
@@ -18,15 +19,16 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     authorize! :read, @user, message: "This user is private."
-    @songs_alphabetical = @user.songs.alphabetical.paginate(page: params[:page], per_page: 10)
-    @songs_recent = @user.songs.recent.paginate(page: params[:page], per_page: 10)
+    #current_ability defaults to read
+    @songs = Song.accessible_by(current_ability).where('user_id = ?', @user.id).
+    order(sort_column + ' ' + sort_direction).paginate(page: params[:page], per_page: 10)
     #@tags = @user.tags.visible_to(current_user).paginate(page: params[:page], per_page: 10)
   end
   
   def index
-    @users_alphabetical = User.alphabetical.paginate(page: params[:page], per_page: 10)
-    @users_uploads = User.uploads.paginate(page: params[:page], per_page: 10)
-    @users_recent = User.recent.paginate(page: params[:page], per_page: 10)
+    #current_ability defaults to read
+    @users = User.accessible_by(current_ability).order(sort_column + ' ' + sort_direction).
+    paginate(page: params[:page], per_page: 10)
   end
 
   def edit
@@ -59,6 +61,19 @@ class UsersController < ApplicationController
       flash[:error] = "There was an error deleting the user."
       render :show
     end
+  end
+
+  private
+
+  #technically there should be one for User model too
+  #but the only important things to sort on are attributes with identical names in Song, so...
+  #SQL injection type tampering could create broken queries but it shouldn't do anything
+  def sort_column
+    Song.column_names.include?(params[:sort]) ? params[:sort] : "name"
+  end
+
+  def sort_direction
+    ["asc", "desc"].include?(params[:direction]) ? params[:direction] : "asc"
   end
 
 end

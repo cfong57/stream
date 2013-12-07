@@ -1,27 +1,11 @@
 <div class="row span8">
   <h1>All Users</h1>
-  <p>Index of all users. Use the tabs to switch between sorting.</p>
-
-  <div class="tabbable tabs-left">
-    <ul class="nav nav-tabs">
-      <li class="active"><a href="#recent" data-toggle="tab">Join date</a></li>
-      <li><a href="#uploads" data-toggle="tab">Uploads</a></li>
-      <li><a href="#alphabetical" data-toggle="tab">Alphabetical</a></li>
-    </ul>
-    <div class="tab-content">
-      <div class="tab-pane active" id="recent">
-        <%= render @users_recent %>
-        <%= will_paginate @users_recent %>
-      </div>
-      <div class="tab-pane" id="uploads">
-        <%= render @users_uploads %>
-        <%= will_paginate @users_uploads %>
-      </div>
-      <div class="tab-pane" id="alphabetical">
-        <%= render @users_alphabetical %>
-        <%= will_paginate @users_alphabetical %>
-      </div>
-    </div>
-  </div>
-
+  <p>
+    Index of all users visible to you.</br>
+    <%= sortable "name", "Sort A-Z" %> ● 
+    <%= sortable "created_at", "Sort by join date" %>
+    <% #=sortable "uploads", "Sort by number of uploads"    need some clever hack for this one %> 
+  </p>
+  <%= render @users %>
+  <%= will_paginate @users %>
 </div>

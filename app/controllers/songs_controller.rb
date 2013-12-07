@@ -1,8 +1,10 @@
 class SongsController < ApplicationController
-  
+  helper_method :sort_column, :sort_direction
+
   def index
-    @songs_alphabetical = Song.alphabetical.paginate(page: params[:page], per_page: 10)
-    @songs_recent = Song.recent.paginate(page: params[:page], per_page: 10)
+    #current_ability defaults to read
+    @songs = Song.accessible_by(current_ability).order(sort_column + ' ' + sort_direction).
+    paginate(page: params[:page], per_page: 10)
   end
 
   def new
@@ -71,7 +73,17 @@ class SongsController < ApplicationController
   end
 
   def anonymous
-    @anonymous_songs = Song.where(user_id: nil).paginate(page: params[:page], per_page: 10)
+    @anonymous_songs = Song.where(user_id: nil).order(sort_column + ' ' + sort_direction).paginate(page: params[:page], per_page: 10)
+  end
+
+  private
+
+  def sort_column
+    Song.column_names.include?(params[:sort]) ? params[:sort] : "name"
+  end
+  
+  def sort_direction
+    ["asc", "desc"].include?(params[:direction]) ? params[:direction] : "asc"
   end
 
 end

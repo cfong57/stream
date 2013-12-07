@@ -6,17 +6,6 @@ class Song < ActiveRecord::Base
   #mount_uploader :audio, SongUploader
   #maybe later
 
-  scope :alphabetical, ->{order('name ASC')}
-  scope :recent, ->{order('created_at DESC')}
-
-  def alphabetical
-    @songs = Song.alphabetical
-  end
-
-  def recent
-    @songs = Song.recent
-  end
-
   #two different users might pick the exact same name for a song, if it's generic
   validates :name, presence: true, uniqueness: {scope: :user_id}
   validates :audio, presence: true  

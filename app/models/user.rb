@@ -30,17 +30,18 @@ class User < ActiveRecord::Base
   #mount_uploader :song, SongUploader 
   #may experiment later with uploading audio directly
 
-  scope :alphabetical, ->{order('name ASC')}
-  scope :recent, ->{order('created_at DESC')}
-
+  # Overly complex code to count user uploads - not sure how to make work with other sorts yet
+  # Select all attributes of the user
+  # Count the uploads made by the user (users with 0 songs will not show up)
+  # Ties the songs table to the users table, via the user_id
+  # Instructs the database to group the results so that each user will be returned in a distinct row
+  # Instructs the database to order the results in descending order
   def self.uploads
-    self.select('users.*'). # Select all attributes of the user
-        select('COUNT(DISTINCT songs.id) AS songs_count'). # Count the uploads made by the user
-        select('COUNT(DISTINCT songs.id) AS rank'). # Label the uploads count as "rank"
-        joins(:songs). # Ties the songs table to the users table, via the user_id
-        group('users.id'). # Instructs the database to group the results so that each user will be returned in a distinct row
-        order('rank DESC') # Instructs the database to order the results in descending order, by the rank that we created in this query.
-        #Users with 0 songs will not show up
+    self.select('users.*'). 
+    select('COUNT(DISTINCT songs.id) AS songs_count'). 
+    joins(:songs). 
+    group('users.id'). 
+    order('songs_count DESC') 
   end
 
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
@@ -77,6 +78,7 @@ class User < ActiveRecord::Base
       songs = Song.where("user_id = ?", spoink)
       songs.each do |song|
         song.update_attribute(:user_id, nil)
+        song.update_attribute(:public, true)
       end
     end
   end

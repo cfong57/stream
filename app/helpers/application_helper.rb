@@ -25,3 +25,13 @@ def will_paginate(collection_or_options = nil, options = {})
   super *[collection_or_options, options].compact
 end
 
+def sortable(column, title = nil)
+  title ||= column.titleize
+  direction = (column == sort_column && sort_direction == "asc") ? "desc" : "asc"
+  if(column == sort_column)
+    css_class = (sort_direction == "asc") ? "asc sort-column" : "desc sort-column"
+  else
+    css_class = nil
+  end
+  link_to title, {:sort => column, :direction => direction}, {:class => css_class}
+end
