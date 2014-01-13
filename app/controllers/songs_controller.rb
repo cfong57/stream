@@ -14,8 +14,6 @@ class SongsController < ApplicationController
   def show
     @song = Song.find(params[:id])
     authorize! :read, @song, message: "This song is private."
-    #@tags = @song.tags.visible_to(current_user).paginate(page: params[:page], per_page: 10)
-    #@tag = Tag.new
   end
 
   def edit

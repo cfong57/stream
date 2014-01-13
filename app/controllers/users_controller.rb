@@ -22,7 +22,6 @@ class UsersController < ApplicationController
     #current_ability defaults to read
     @songs = Song.accessible_by(current_ability).where('user_id = ?', @user.id).
     order(sort_column + ' ' + sort_direction).paginate(page: params[:page], per_page: 10)
-    #@tags = @user.tags.visible_to(current_user).paginate(page: params[:page], per_page: 10)
   end
   
   def index

@@ -10,7 +10,6 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :name,
   :provider, :uid, :public, :make_public_on_delete
 
-  #has_many :tags, dependent: :destroy
   has_many :songs, dependent: :destroy
   #songs are deleted when a user is deleted, unless they change make_public_on_delete to true
   #in that case, the songs are moved to the anon pool (nil user_id)

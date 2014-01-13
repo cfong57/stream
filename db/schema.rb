@@ -26,22 +26,6 @@ ActiveRecord::Schema.define(:version => 20131027225901) do
 
   add_index "songs", ["user_id"], :name => "index_songs_on_user_id"
 
-  create_table "songs_tags", :force => true do |t|
-    t.integer "song_id"
-    t.integer "tag_id"
-  end
-
-  create_table "tags", :force => true do |t|
-    t.string   "name"
-    t.text     "value"
-    t.integer  "user_id"
-    t.boolean  "public",     :default => true
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
-  end
-
-  add_index "tags", ["user_id"], :name => "index_tags_on_user_id"
-
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email",                  :default => "",    :null => false
