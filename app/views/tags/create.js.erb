@@ -1,6 +1,0 @@
-<% if @tag.valid? %>
-  $(".js-tags").prepend("<%= escape_javascript(render(@tag)) %>");
-  $(".new_tag").replaceWith("<%= escape_javascript(render partial: 'form', locals: { tag: @new_tag }) %>");
-<% else %>
-  $(".new_tag").replaceWith("<%= escape_javascript(render partial: 'form', locals: { tag: @tag }) %>");
-<% end %>
