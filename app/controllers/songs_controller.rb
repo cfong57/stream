@@ -77,18 +77,8 @@ class SongsController < ApplicationController
   end
 
   def anonymous
-<<<<<<< HEAD
-    if params[:tag]
-      @anonymous_songs = Song.where(user_id: nil).tagged_with(params[:tag]).
-      order(sort_column + ' ' + sort_direction).paginate(page: params[:page], per_page: 10)
-    else
-      @anonymous_songs = Song.where(user_id: nil).
-      order(sort_column + ' ' + sort_direction).paginate(page: params[:page], per_page: 10)
-    end
-=======
     @anonymous_songs = Song.where(user_id: nil).order(sort_column + ' ' + sort_direction).
     paginate(page: params[:page], per_page: 10)
->>>>>>> tagging
   end
 
   private
