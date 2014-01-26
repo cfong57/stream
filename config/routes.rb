@@ -7,4 +7,6 @@ Stream::Application.routes.draw do
   match "anonymous" => 'songs#anonymous', via: :get
 
   resources :songs
+
+  get 'tags/:tag', to: 'songs#index', as: :tag
 end

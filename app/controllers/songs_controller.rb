@@ -3,8 +3,14 @@ class SongsController < ApplicationController
 
   def index
     #current_ability defaults to read
-    @songs = Song.accessible_by(current_ability).order(sort_column + ' ' + sort_direction).
-    paginate(page: params[:page], per_page: 10)
+    if params[:tag]
+      @songs = Song.accessible_by(current_ability).tagged_with(params[:tag]).
+      order(sort_column + ' ' + sort_direction).
+      paginate(page: params[:page], per_page: 10)
+    else
+      @songs = Song.accessible_by(current_ability).order(sort_column + ' ' + sort_direction).
+      paginate(page: params[:page], per_page: 10)
+    end
   end
 
   def new
@@ -71,7 +77,8 @@ class SongsController < ApplicationController
   end
 
   def anonymous
-    @anonymous_songs = Song.where(user_id: nil).order(sort_column + ' ' + sort_direction).paginate(page: params[:page], per_page: 10)
+    @anonymous_songs = Song.where(user_id: nil).order(sort_column + ' ' + sort_direction).
+    paginate(page: params[:page], per_page: 10)
   end
 
   private
@@ -81,7 +88,11 @@ class SongsController < ApplicationController
   end
   
   def sort_direction
-    ["asc", "desc"].include?(params[:direction]) ? params[:direction] : "asc"
+    if(["asc", "desc"].include?(params[:direction]))
+      params[:direction] == "asc" ? "desc" : "asc"
+    else
+      "asc"
+    end
   end
 
 end

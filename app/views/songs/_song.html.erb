@@ -12,6 +12,8 @@
   </small>  
     <p><%= song.audio_html %></p>
     <p><%= markdown song.info %></p> 
+    Tags: <%= raw song.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %>
+    <br style="clear: both; height: 0px;" />
     <% if can? :edit, song %>
       <%= link_to "Edit Song", edit_song_path(song), class: 'btn btn-mini btn-primary' %> 
     <% end %>

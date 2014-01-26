@@ -1,3 +1,8 @@
+#all tags saved as lowercase internally
+ActsAsTaggableOn.force_lowercase = true
+#remove unused tags after removing taggings
+ActsAsTaggableOn.remove_unused_tags = true
+
 seeds = {"slap chop" => "http://www.youtube.com/watch?v=JCZ13jm7wQI", 
 "chinese electric pokemon" => "http://www.youtube.com/watch?v=jD-aww5bmug",
 "falling through the sun" => "http://www.youtube.com/watch?v=8Fi4aVrbtvc",
