@@ -5,6 +5,13 @@
     <%= sortable "name", "Sort A-Z" %> ●
     <%= sortable "created_at", "Sort by upload date" %>
   </p>
+
+  <div id="tag_cloud">
+    Tag cloud: 
+    <% tag_cloud Song.tag_counts, ["s", "m", "l"] do |tag, css_class| %>
+      <%= link_to tag.name, tag_path(tag.name), class: css_class %>
+    <% end %>
+  </div>
   <%= render @songs %>
   <%= will_paginate @songs %>
 </div>

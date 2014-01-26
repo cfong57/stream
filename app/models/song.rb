@@ -1,6 +1,8 @@
 class Song < ActiveRecord::Base
   belongs_to :user
-  attr_accessible :name, :audio, :info, :public
+  attr_accessible :name, :audio, :info, :public, :tag_list
+
+  acts_as_taggable
 
   #mount_uploader :audio, SongUploader
   #maybe later

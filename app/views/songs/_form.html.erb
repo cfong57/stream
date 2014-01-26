@@ -28,6 +28,12 @@
     </div>
   <% end %>
   <div class="control-group">
+    <%= f.label :tag_list, "Tags", class: 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :tag_list %>
+    </div>
+  </div>
+  <div class="control-group">
     <div class="controls">
       <%= f.label :public, class: 'checkbox' do %>
         <%= f.check_box :public %> Public song?

@@ -71,6 +71,8 @@ class User < ActiveRecord::Base
     self.role = 'member'
   end
 
+  #inefficient but not sure of a better way right now
+  #self.songs doesn't seem to work
   def transfer_songs
     if self.make_public_on_delete
       spoink = self.id
@@ -78,6 +80,7 @@ class User < ActiveRecord::Base
       songs.each do |song|
         song.update_attribute(:user_id, nil)
         song.update_attribute(:public, true)
+        song.update_attribute(:tag_list, nil)
       end
     end
   end
