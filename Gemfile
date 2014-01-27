@@ -78,7 +78,7 @@ gem 'redcarpet'
 
 # stuff for handling images
 gem 'carrierwave'
-gem 'mini_magick'   #, '~> 3.5.0'
+gem 'mini_magick', '~> 3.5.0'
 
 # Amazon Web Services helper gem
 gem 'fog'
