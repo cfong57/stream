@@ -32,6 +32,13 @@
       </div>
     </div>
   <% end %>
+  <div class="control-group">
+    <%= image_tag(current_user.avatar.small.url) if current_user.avatar? %>
+    <%= f.label :avatar, class: 'control-label' %>
+    <div class="controls"> 
+      <%= f.file_field :avatar %>
+    </div>
+  </div>
   <div class="control-group controls">
     <%= f.label :public, class: 'checkbox' do %>
       <%= f.check_box :public %> Public userpage viewable by everyone?

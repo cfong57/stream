@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140114004139) do
+ActiveRecord::Schema.define(:version => 20140127003649) do
 
   create_table "songs", :force => true do |t|
     t.string   "name"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(:version => 20140114004139) do
     t.string   "uid"
     t.boolean  "make_public_on_delete",  :default => false
     t.boolean  "public",                 :default => true
+    t.string   "avatar"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

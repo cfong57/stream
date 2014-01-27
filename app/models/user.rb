@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :name,
-  :provider, :uid, :public, :make_public_on_delete
+  :provider, :uid, :public, :make_public_on_delete, :avatar
 
   has_many :songs, dependent: :destroy
   #songs are deleted when a user is deleted, unless they change make_public_on_delete to true
@@ -26,8 +26,8 @@ class User < ActiveRecord::Base
     validates :password, presence: true
   end
   
-  #mount_uploader :song, SongUploader 
-  #may experiment later with uploading audio directly
+  mount_uploader :avatar, AvatarUploader 
+
 
   # Overly complex code to count user uploads - not sure how to make work with other sorts yet
   # Select all attributes of the user

@@ -1,5 +1,5 @@
 <div class="row span12 media media-body">
-  <h2 class="media-heading"><%= @user.name %></h2>
+  <h2 class="media-heading"><%= image_tag(@user.avatar.small.url) if @user.avatar? %><%= @user.name %></h2>
   <small>
     <%= pluralize(@user.songs.count, 'song') %> ●
     Member since <%= time_ago_in_words(@user.created_at) %>
