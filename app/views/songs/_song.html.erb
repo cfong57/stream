@@ -4,7 +4,7 @@
     <%= link_to '#', class: 'pull-left' do %>
       <%= link_to ("\##{song.id} #{song.name}"), song %>
       <br style="clear: both; height: 0px;" />
-      <%= image_tag(song.user.avatar.tiny.url) if song.user.avatar? %>
+      <%= image_tag(song.user.avatar.tiny.url) if song.user && song.user.avatar? %>
       Uploaded <%= time_ago_in_words(song.created_at) %> ago
       <% if (song.user && (can? :read, song.user)) %>
         by <%= link_to song.user.name, song.user %>
