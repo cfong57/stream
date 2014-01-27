@@ -1,5 +1,6 @@
 <div class="media media-body">
   <h4 class="media-heading">
+    <%= image_tag(user.avatar.tiny.url) if user.avatar? %>
     <%= link_to user.name, user %>
   </h4>
   <small>
