@@ -40,6 +40,13 @@ group :development, :test do
   gem 'database_cleaner'
 end
 
+# Amazon Web Services helper gem
+gem 'fog'
+
+group :production do
+  gem 'unf' #goes with fog but seems to break stuff in development
+end
+
 # Use SCSS for stylesheets
 # gem 'sass-rails', '~> 4.0.0.rc2'
 
@@ -79,10 +86,6 @@ gem 'redcarpet'
 # stuff for handling images
 gem 'carrierwave'
 gem 'mini_magick', '~> 3.5.0'
-
-# Amazon Web Services helper gems
-gem 'fog'
-gem 'unf'
 
 # pagination
 gem 'will_paginate', '~> 3.0'

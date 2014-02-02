@@ -1,7 +1,0 @@
-$('#song-' +<%= @song.id %>).hide();
-
-<% if @song.destroyed? %>
-  $('#song-' +<%= @song.id %>).hide();
-<% else %>
-  $('#song-' +<%= @song.id %>).prepend("<div class='alert alert-error'><%= flash[:error] %></div>");
-<% end %>
